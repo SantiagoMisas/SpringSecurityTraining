@@ -15,6 +15,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class SecurityBeansInjector {
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
@@ -23,8 +26,8 @@ public class SecurityBeansInjector {
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider provider=new DaoAuthenticationProvider();
-        provider.setUserDetailsService(null);
-        provider.setPasswordEncoder();
+        provider.setUserDetailsService(userDetailsService());
+        provider.setPasswordEncoder(passwordEncoder());
 
         return provider;
     }
@@ -35,7 +38,7 @@ public class SecurityBeansInjector {
         }
 
         @Bean
-        public UserDetailsService userDetailsService(UserRepository userRepository){
+        public UserDetailsService userDetailsService(){
             return username->{
                 return  userRepository.findByUsername(username)
                         .orElseThrow(()-> new RuntimeException("User not found"));
