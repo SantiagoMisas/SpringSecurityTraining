@@ -19,8 +19,8 @@ public class SpringSecurityTrainingApplication {
 	@Bean
 	public CommandLineRunner createPasswordsCommand() {
 		return args->{
-			System.out.println(passwordEncoder.encode("123"));
-			System.out.println(passwordEncoder.encode("456"));
+			System.out.println(passwordEncoder.encode("customerrole"));
+			System.out.println(passwordEncoder.encode("administratorrole"));
 		};
 	}
 
